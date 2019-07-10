@@ -5,7 +5,7 @@ import {
     Header,
     ScrollOption,
     ItemGridContainer,
-    Pagination
+    PaginationContainer
 } from './UI'
 class App extends Component {
     constructor(props){
@@ -30,7 +30,10 @@ class App extends Component {
                         <ItemGridContainer {...routeProps} />
                      }
                     />
-                <Route path="/" component={Pagination} />
+                <Route path="/" render ={
+                        (routeProps) => 
+                        <PaginationContainer {...routeProps} />
+                     } />
                   
             </Router>
             </React.Fragment>

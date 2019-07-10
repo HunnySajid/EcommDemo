@@ -18,6 +18,7 @@ const useStyles = makeStyles(theme => ({
     display: "inline"
   },
   link: {
+    cursor:"pointer",
     position: "relative",
     float: "left",
     padding: "6px 12px",
@@ -29,30 +30,42 @@ const useStyles = makeStyles(theme => ({
     border: "1px solid #ddd"
   }
 }));
-
-export default function Pagination(props) {
+const TOTAL_ITEMS = 500;
+export default function Pagination({activePage,limit, changeHandler}) {
   const classes = useStyles();
-
+  const pages = []
+  const totalPages = Math.floor(TOTAL_ITEMS / limit)
+  const prePages = (activePage - ((activePage % 5)?(activePage % 5):((activePage-1) % 5)))
+  let pagesCount = 0
+  if((totalPages - prePages - 5) > 0 )
+  {
+    pagesCount = 5
+  }
+  else {
+    pagesCount = (activePage % 5)
+  }
+  let prevPage = prePages
+  let nextPage = 1
+  for(var i = 0; i < (pagesCount);i++)
+  {
+    const pn = prePages + i + 1
+    const isActive = (activePage == pn)
+    pages.push(<li className={classes.page}>
+      <label className={classes.link} 
+      style={{"backgroundColor":isActive?'#74d274':'', "color":isActive?'white':''}} 
+      onClick={() => changeHandler(pn)} >{pn}</label>
+    </li>)
+    nextPage = pn
+  }  
   return (
     <ul className={classes.pagination}>
-      <li className={classes.page}>
-        <label className={classes.link}>«</label>
-      </li><li className={classes.page}>
-        <label className={classes.link} href="#">1</label>
-      </li><li className={classes.page}>
-        <label className={classes.link} href="#">2</label>
-      </li><li className={classes.page}>
-        <label className={classes.link} href="#">3</label>
-      </li><li className={classes.page}>
-        <label className={classes.link} href="#">4</label>
-      </li><li className={classes.page}>
-        <label className={classes.link} href="#">5</label>
-      </li><li className={classes.page}>
-        <label className={classes.link} href="#">6</label>
-      </li>
-      <li className={classes.page}>
-        <label className={classes.link} href="#">»</label>
-      </li>
+      {(activePage > 5) && <li className={classes.page}>
+        <label className={classes.link} onClick={()=> changeHandler(prevPage - 1)} >«</label>
+      </li>}
+      {pages}      
+      {(pagesCount >= 5) && <li className={classes.page}>
+        <label className={classes.link} onClick={()=> changeHandler(nextPage + 1)} >»</label>
+      </li>}
     </ul>
   );
 }
