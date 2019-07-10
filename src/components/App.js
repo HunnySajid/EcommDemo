@@ -1,17 +1,38 @@
 
 import React, { Component } from 'react';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 import {
     Header,
     ScrollOption,
-    ItemGrid
+    ItemGridContainer,
+    Pagination
 } from './UI'
 class App extends Component {
-    render() {
+    constructor(props){
+        super(props)
+        this.state = {
+            paginate:true,
+            defaultPage:1,
+            defaultLimit:15
+        }
+    }
+
+    render() {   
         return (
             <React.Fragment>
-                <Header title="React Ecomm" />
-                <ScrollOption label="Pagination" value="abc" handleChange={() => console.log("Change")} />
-                <ItemGrid />
+            <Router>
+                <Route path="/" component={Header}  />
+                <Route path="/" render={ (routeProps) => <ScrollOption {...routeProps} label="Pagination" />} />
+                <Route 
+                    path="/" 
+                    render ={
+                        (routeProps) => 
+                        <ItemGridContainer {...routeProps} />
+                     }
+                    />
+                <Route path="/" component={Pagination} />
+                  
+            </Router>
             </React.Fragment>
 
         )
