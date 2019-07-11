@@ -5,6 +5,7 @@ import Pagination from './Pagination'
 import SortTab from './SortTab'
 import ItemGridContainer from './ItemGridContainer'
 import PaginationContainer from './PaginationContainer'
+import Loader from './Loader'
 export {
     Header,
     ItemGrid,
@@ -12,5 +13,6 @@ export {
     Pagination,
     ItemGridContainer,
     SortTab,
-    PaginationContainer
+    PaginationContainer,
+    Loader
 }
